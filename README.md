@@ -7,3 +7,5 @@ Ef notandi tapar, það er, er ekki hægt að birta nýjan kubb í borðið endu
 
 Notað er canvas til að keyra upp og teikna allt upp í browser-num.
 Notað er matrix til að geyma alla kubbana sem eru teiknaðir
+
+Link: http://tsuts.tskoli.is/2t/1211992469/Vef_Lokaverkefni_2017/index.html
