@@ -1,13 +1,13 @@
 //skilgreina fyrst of fremst svæðið sem ég er að vinna í, þ
 const canvas = document.getElementById('tetris');
 const context = canvas.getContext('2d');
-//var Hscore;
+const gameState = true;
 
-var Mbt = document.getElementById('Music_btn');  
-//var Sbt = document.getElementById('Start_btn');
-var playing = false;
+var Mbt = document.getElementById('Music_btn');  //Sækir í music takkann
+var Sbt = document.getElementById('Start_btn');
+var playing = false; //nýti til að stilla music takkan
 
-Mbt.addEventListener("click", function() {
+Mbt.addEventListener("click", function() { //ef playing er stillt á false, er það sett í true og tónlistinn byrjar, ef það er true, er slökkt á því og gert að false
     if (playing == true) 
     {
         pauseAudio();
@@ -20,27 +20,29 @@ Mbt.addEventListener("click", function() {
     }
 }, false);  
 
+//playAudio og pauseAudio eru smá föll til að keikja á tónlistina og slökkva á enni 
 function playAudio()
 {
-
 document.getElementById("Music_track").play();
 }
 
 function pauseAudio()
 {
-
  document.getElementById("Music_track").pause();
 }
 
 
-/*Sbt.addEventListener("click", function() {
-     
-}, false);*/
+Sbt.addEventListener("click", function() {
+      arena.forEach(row => row.fill(0));
+        player.score = 0;
+        updateScore();
+        gameState = true;
+}, false);
 
 //Skilgreinir stærðarskalann fyrir leikjaborðið, hver einn pixell jafngildir 20 pixla í x og y ás
 context.scale(20, 20);
 
-function arenaSweep() {
+function rowClear() {
     let rowCount = 1;
     outer: for (let y = arena.length -1; y > 0; --y) {
         for (let x = 0; x < arena[y].length; ++x) {
@@ -53,13 +55,13 @@ function arenaSweep() {
         arena.unshift(row);
         ++y;
 
-        player.score += rowCount * 10;
+        player.score += rowCount * 15; //uppfærir notandastig þegar row er "cleared"
         rowCount *= 2;
     }
 }
 
-//Skilgreinir collision detection fyrir kubbanna og leikjavellinn sjálfann
-function collision(arena, player) {
+//Skilgreinir collisionDetection detection fyrir kubbanna og leikjavellinn sjálfann
+function collisionDetection(arena, player) {
     const m = player.matrix;
     const o = player.pos;
     for (let y = 0; y < m.length; ++y) {
@@ -184,19 +186,19 @@ function rotate(matrix, dir) {
 //
 function playerDrop() {
     player.pos.y++;
-    if (collision(arena, player)) {
+    if (collisionDetection(arena, player)) {
         player.pos.y--;
         merge(arena, player);
         playerReset();
-        arenaSweep();
+        rowClear();
         updateScore();
     }
     dropCounter = 0;
 }
-
+//Tæknilega fallið sem er vísað í til að hreyfa kubbanna
 function playerMove(offset) {
     player.pos.x += offset;
-    if (collision(arena, player)) {
+    if (collisionDetection(arena, player)) {
         player.pos.x -= offset;
     }
 }
@@ -207,18 +209,19 @@ function playerReset() {
     player.pos.y = 0;
     player.pos.x = (arena[0].length / 2 | 0) -
                    (player.matrix[0].length / 2 | 0);
-    if (collision(arena, player)) {
-        arena.forEach(row => row.fill(0));
-        player.score = 0;
-        updateScore();
+    if (collisionDetection(arena, player)) {
+        gameState = false;
+        alert("Game over: Try again?");
+       
+
     }
 }
-
+//Er notað til að snúa kubbinum sem eru núna birtur, vísar í rotate fallið fyrir tæknilega virkni ogcollisionDetection svo ekki er hægt að snúa í aðra kubba 
 function playerRotate(dir) {
     const pos = player.pos.x;
     let offset = 1;
     rotate(player.matrix, dir);
-    while (collision(arena, player)) {
+    while (collisionDetection(arena, player)) { 
         player.pos.x += offset;
         offset = -(offset + (offset > 0 ? 1 : -1));
         if (offset > player.matrix[0].length) {
@@ -234,9 +237,9 @@ let dropInterval = 1000;
 
 let lastTime = 0;
 function update(time = 0) {
-    const deltaTime = time - lastTime;
+const newTime = time - lastTime;
 
-    dropCounter += deltaTime;
+    dropCounter += newTime;
     if (dropCounter > dropInterval) {
         playerDrop();
     }
@@ -246,16 +249,16 @@ function update(time = 0) {
     draw();
     requestAnimationFrame(update);
 }
-
+//Í hvert skipti
 function updateScore() {
     document.getElementById('score').innerText = player.score;
-    if (Hscore === null || Hscore < player.score) 
+    /*if (Hscore === null || Hscore < player.score) 
     {
     	Hscore = player.score;
     	document.getElementById('high_score').innerText = Hscore;
-    }
+    }*/
 }
-
+//Setur upp event listener fyrir notanda að nota örva takkanna og w takkann í leiknum, vísar í playerMove fallið
 document.addEventListener('keydown', event => {
     if (event.keyCode === 37) {
         playerMove(-1);
@@ -269,7 +272,7 @@ document.addEventListener('keydown', event => {
         playerRotate(1);
     }
 });
-
+//skilgreininr litina sem eru notaðir í draw fallinu fyrir kubbanna
 const colors = [
     null,
     '#FF0D72',
@@ -283,6 +286,7 @@ const colors = [
 //skilgreini stærðarhlutföllin fyrir leikjasvæðið
 const arena = createMatrix(12, 20);
 
+//
 const player = {
     pos: {x: 0, y: 0},
     matrix: null,
@@ -313,10 +317,12 @@ mt.addEventListener("click", function()
         var audio = "Resources/Tetris_theme.mp3"; 
         audio.play()}, false);*/
 
+//
+
+if (gameState == true) 
+{
 playerReset();
 updateScore();
 update();
+}
 
-/*
-Reset()
-*/
