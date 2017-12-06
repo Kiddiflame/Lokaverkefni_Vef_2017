@@ -9,3 +9,29 @@ body {
         border: solid .2em #fff;
         height: 90vh;
       }
+
+#Start_btn
+{
+  color: #202028;
+  background-color: white;
+   width: 150px;
+  border: solid 1px black;
+  text-align:center;
+  cursor: pointer;
+  float:right;
+  margin: 0;
+}
+
+#Music_btn
+{
+
+    color: #202028;
+  background-color: white;
+   width: 150px;
+  border: solid 1px black;
+  text-align:center;
+  cursor: pointer;
+  float: right;
+  margin-right: 5px;
+}
+      

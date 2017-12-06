@@ -1,8 +1,43 @@
 //skilgreina fyrst of fremst svæðið sem ég er að vinna í, þ
 const canvas = document.getElementById('tetris');
 const context = canvas.getContext('2d');
-var Hscore;
+//var Hscore;
 
+var Mbt = document.getElementById('Music_btn');  
+//var Sbt = document.getElementById('Start_btn');
+var playing = false;
+
+Mbt.addEventListener("click", function() {
+    if (playing == true) 
+    {
+        pauseAudio();
+        playing = false;
+    }
+    else if(playing == false)
+    {
+        playAudio();
+        playing = true;
+    }
+}, false);  
+
+function playAudio()
+{
+
+document.getElementById("Music_track").play();
+}
+
+function pauseAudio()
+{
+
+ document.getElementById("Music_track").pause();
+}
+
+
+/*Sbt.addEventListener("click", function() {
+     
+}, false);*/
+
+//Skilgreinir stærðarskalann fyrir leikjaborðið, hver einn pixell jafngildir 20 pixla í x og y ás
 context.scale(20, 20);
 
 function arenaSweep() {
@@ -23,7 +58,8 @@ function arenaSweep() {
     }
 }
 
-function collide(arena, player) {
+//Skilgreinir collision detection fyrir kubbanna og leikjavellinn sjálfann
+function collision(arena, player) {
     const m = player.matrix;
     const o = player.pos;
     for (let y = 0; y < m.length; ++y) {
@@ -108,10 +144,10 @@ function drawMatrix(matrix, offset) {
     });
 }
 
+//N
 function draw() {
     context.fillStyle = '#000';
     context.fillRect(0, 0, canvas.width, canvas.height);
-
     drawMatrix(arena, {x: 0, y: 0});
     drawMatrix(player.matrix, player.pos);
 }
@@ -125,7 +161,7 @@ function merge(arena, player) {
         });
     });
 }
-
+//gerir notanda kleyft til að snúa kubbinu sem er teiknaður við
 function rotate(matrix, dir) {
     for (let y = 0; y < matrix.length; ++y) {
         for (let x = 0; x < y; ++x) {
@@ -145,10 +181,10 @@ function rotate(matrix, dir) {
         matrix.reverse();
     }
 }
-
+//
 function playerDrop() {
     player.pos.y++;
-    if (collide(arena, player)) {
+    if (collision(arena, player)) {
         player.pos.y--;
         merge(arena, player);
         playerReset();
@@ -160,7 +196,7 @@ function playerDrop() {
 
 function playerMove(offset) {
     player.pos.x += offset;
-    if (collide(arena, player)) {
+    if (collision(arena, player)) {
         player.pos.x -= offset;
     }
 }
@@ -171,7 +207,7 @@ function playerReset() {
     player.pos.y = 0;
     player.pos.x = (arena[0].length / 2 | 0) -
                    (player.matrix[0].length / 2 | 0);
-    if (collide(arena, player)) {
+    if (collision(arena, player)) {
         arena.forEach(row => row.fill(0));
         player.score = 0;
         updateScore();
@@ -182,7 +218,7 @@ function playerRotate(dir) {
     const pos = player.pos.x;
     let offset = 1;
     rotate(player.matrix, dir);
-    while (collide(arena, player)) {
+    while (collision(arena, player)) {
         player.pos.x += offset;
         offset = -(offset + (offset > 0 ? 1 : -1));
         if (offset > player.matrix[0].length) {
@@ -253,6 +289,34 @@ const player = {
     score: 0,
 };
 
+/*function musicPlay()
+{
+    var active = false;
+    if (active == false) 
+    {
+        active = true;
+        
+
+    }
+    else
+    {
+        active = false;
+        document.getElementById('Music_track').pause();
+    }
+    
+}
+*/
+
+/*var mt = document.getElementById("Music_button");
+mt.addEventListener("click", function()
+    {
+        var audio = "Resources/Tetris_theme.mp3"; 
+        audio.play()}, false);*/
+
 playerReset();
 updateScore();
 update();
+
+/*
+Reset()
+*/
