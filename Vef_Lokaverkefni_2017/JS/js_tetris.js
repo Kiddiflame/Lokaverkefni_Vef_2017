@@ -1,4 +1,4 @@
-//skilgreina fyrst of fremst svæðið sem ég er að vinna í, þ
+//skilgreina fyrst of fremst svæðið sem ég er að vinna í, þ.e. canvas og 2d context
 const canvas = document.getElementById('tetris');
 const context = canvas.getContext('2d');
 const gameState = true;
