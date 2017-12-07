@@ -10,5 +10,7 @@ Ef notandi tapar, það er, er ekki hægt að birta nýjan kubb í borðið endu
 <br>Notað er matrix til að geyma alla kubbana sem eru teiknaðir
 <br>Held í boolean til að ákveða hvenær leikurinn er búinn eða ekki
 
+Controls: örvar til að hreyfa kubbanna og w til að snúa þá
+
 Link: http://tsuts.tskoli.is/2t/1211992469/Vef_Lokaverkefni_2017/index.html
       <br>https://kiddiflame.github.io/
