@@ -11,3 +11,4 @@ Ef notandi tapar, það er, er ekki hægt að birta nýjan kubb í borðið endu
 <br>Held í boolean til að ákveða hvenær leikurinn er búinn eða ekki
 
 Link: http://tsuts.tskoli.is/2t/1211992469/Vef_Lokaverkefni_2017/index.html
+      https://kiddiflame.github.io/
