@@ -14,3 +14,5 @@ Controls: örvar til að hreyfa kubbanna og w til að snúa þá
 
 Link: http://tsuts.tskoli.is/2t/1211992469/Vef_Lokaverkefni_2017/index.html
       <br>https://kiddiflame.github.io/
+
+<br>Tutorial: https://www.youtube.com/watch?v=H2aW5V46khA
